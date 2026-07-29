@@ -1,42 +1,61 @@
 # Codex Tower
 
-Codex Tower is a local macOS-first Codex plugin for keeping track of multiple conversations. It tracks lifecycle metadata in a shared local data directory and plays a sound when a task needs attention or is explicitly marked complete.
+**在 macOS 菜单栏中，一眼掌握所有 Codex 任务。**
 
-## What v0.1 tracks
+Codex Tower 是一款本地优先的 Codex 插件与原生菜单栏应用。它将正在进行、等待你处理和已完成的任务集中到一个轻量面板里，让你无需在多个对话之间来回寻找。
 
-- Per-session status: `running`, `waiting_for_you`, `awaiting_review`, `completed`, and `closed`.
-- A short task title from the latest submitted prompt (limited to 100 characters).
-- Plan progress emitted by `update_plan` and subagent lifecycle counts.
-- No full transcripts or tool output.
-- Existing local threads can be imported as neutral `history` cards with no inferred completion state.
-- Opening an `awaiting_review` task marks it as `reviewed` immediately; later lifecycle events replace that local view state.
+![Codex Tower dashboard showing active tasks](assets/dashboard.png)
 
-## Sound behavior
+## 它能做什么
 
-- `Basso`: Codex asks for approval.
-- `Glass`: a turn stops and is awaiting review.
-- `Hero`: the `mark_task_complete` tool explicitly marks a task complete.
+- **任务总览**：按最新活动时间展示本地 Codex 任务，默认优先显示进行中的工作。
+- **需要处理的提醒**：等待审批或等待查看的任务会被显著标记，并在菜单栏显示数量。
+- **一键回到对话**：点击任务卡片即可打开对应的 Codex 对话。
+- **筛选清晰**：在 Active、Attention、History 与全部任务之间快速切换；历史记录不会遮挡当前工作。
+- **本地提示音**：任务需要注意或被显式标记为完成时，可播放 macOS 系统提示音；支持一键静音。
+- **历史同步**：可导入已有的本地 Codex 对话作为只读历史卡片，不会猜测它们是否已完成。
 
-On macOS, sounds use the built-in `/usr/bin/afplay`; other platforms record statuses without sound. Use the `update_settings` tool to mute or unmute notifications.
+## 隐私优先
 
-## Menu-bar app
+Codex Tower 只保存本机任务元数据，例如标题、状态、更新时间、计划进度和子代理数量。
 
-`menu-bar-app` is a native macOS SwiftUI app. It shows a small status-bar icon; click it to open a grouped task dashboard and mute notifications. It reads the same JSON files as the plugin from `~/Library/Application Support/Codex Tower` (or `CODEX_TOWER_DATA_DIR` when set).
+它**不会读取、保存或上传**对话正文、工具输出或其他敏感内容。数据默认存放在：
 
-Build it with:
+```text
+~/Library/Application Support/Codex Tower
+```
+
+## 安装
+
+1. 前往 [Releases](https://github.com/Hyp-Plus/codex-tower/releases) 下载最新版 `Codex Tower-*-macos-arm64.zip`。
+2. 解压后将 `Codex Tower.app` 拖入「应用程序」。
+3. 首次打开后，在 Codex 中安装并信任 Codex Tower 插件的 hooks。
+4. 开始新的 Codex 任务，菜单栏应用便会自动显示任务状态。
+
+> 目前支持 Apple Silicon Mac，要求 macOS 13 或更新版本。应用为本地构建、未公证版本；首次打开如被系统拦截，请在「应用程序」中右键选择“打开”。
+
+## 工作方式
+
+```text
+Codex 生命周期 hooks  →  本地 JSON 元数据  →  Codex Tower 菜单栏面板
+```
+
+插件在任务状态变化时更新本地元数据；菜单栏应用每秒读取一次这些文件并刷新界面。整个过程不经过云端服务。
+
+## 开发
 
 ```zsh
-cd /Users/haruki/plugins/codex-tower/menu-bar-app
-./build-app.sh
+cd menu-bar-app
+zsh build-app.sh
 open "dist/Codex Tower.app"
 ```
 
-The app stays out of the Dock (`LSUIElement`) and is unsigned for local use. Use the macOS login-item settings to launch it automatically after you decide to keep it.
+项目包含三部分：
 
-## Install and trust
+- `hooks/`：记录 Codex 任务生命周期。
+- `server/`：提供本地任务查询、历史同步及通知设置。
+- `menu-bar-app/`：原生 SwiftUI 菜单栏应用。
 
-Install from the personal marketplace, then review and trust the plugin's hooks before using it. Start a new Codex task after installation so its lifecycle hooks and MCP tools are discovered.
+## 许可证与贡献
 
-## v0.1 boundary
-
-The plugin only observes local Codex sessions where its hooks are enabled. The menu-bar app polls the local metadata once a second and does not read or upload conversation transcripts.
+欢迎提交 issue 和 pull request。请先阅读代码及隐私边界，确保任何贡献都不会引入对对话内容的收集或上传。
