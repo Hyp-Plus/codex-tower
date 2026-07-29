@@ -5,6 +5,7 @@
 - Dashboard now opens on **Active** tasks, keeping live work ahead of imported history.
 - Added a dedicated **History** filter for browsing imported local tasks.
 - Replaced the menu-bar symbol with a clearer twin-tower silhouette.
+- Plays native macOS sounds when tasks need attention or are explicitly marked complete.
 
 ---
 

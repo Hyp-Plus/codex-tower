@@ -1,48 +1,57 @@
 # Codex Tower
 
-**在 macOS 菜单栏中，一眼掌握所有 Codex 任务。**
+**A local macOS menu-bar dashboard for Codex tasks — with sound alerts when a task needs you or is explicitly completed.**
 
-Codex Tower 是一款本地优先的 Codex 插件与原生菜单栏应用。它将正在进行、等待你处理和已完成的任务集中到一个轻量面板里，让你无需在多个对话之间来回寻找。
+Codex Tower helps you keep track of multiple Codex conversations without constantly switching between them. It collects lightweight task-status metadata locally and presents it in a compact native menu-bar dashboard.
 
 ![Codex Tower dashboard showing active tasks](assets/dashboard.png)
 
-## 它能做什么
+## Why Codex Tower
 
-- **任务总览**：按最新活动时间展示本地 Codex 任务，默认优先显示进行中的工作。
-- **需要处理的提醒**：等待审批或等待查看的任务会被显著标记，并在菜单栏显示数量。
-- **一键回到对话**：点击任务卡片即可打开对应的 Codex 对话。
-- **筛选清晰**：在 Active、Attention、History 与全部任务之间快速切换；历史记录不会遮挡当前工作。
-- **本地提示音**：任务需要注意或被显式标记为完成时，可播放 macOS 系统提示音；支持一键静音。
-- **历史同步**：可导入已有的本地 Codex 对话作为只读历史卡片，不会猜测它们是否已完成。
+- **Never miss a completed task.** Codex Tower plays a macOS notification sound when a task is explicitly marked complete.
+- **Know when attention is needed.** It also alerts you when Codex is waiting for approval or a turn is ready for review.
+- **See live work first.** The dashboard opens on active tasks, so imported history never buries what is happening now.
+- **Return to any task in one click.** Select a task card to open its matching Codex conversation.
+- **Stay in control.** Filter All, Attention, Active, and History tasks; mute sounds whenever you need focus.
 
-## 隐私优先
+## Privacy first
 
-Codex Tower 只保存本机任务元数据，例如标题、状态、更新时间、计划进度和子代理数量。
+Codex Tower stores only local task metadata, such as task title, lifecycle status, update time, plan progress, and subagent count.
 
-它**不会读取、保存或上传**对话正文、工具输出或其他敏感内容。数据默认存放在：
+It **does not read, store, or upload** conversation transcripts, tool output, or other sensitive task content. By default, data stays on your Mac at:
 
 ```text
 ~/Library/Application Support/Codex Tower
 ```
 
-## 安装
+## Install
 
-1. 前往 [Releases](https://github.com/Hyp-Plus/codex-tower/releases) 下载最新版 `Codex Tower-*-macos-arm64.zip`。
-2. 解压后将 `Codex Tower.app` 拖入「应用程序」。
-3. 首次打开后，在 Codex 中安装并信任 Codex Tower 插件的 hooks。
-4. 开始新的 Codex 任务，菜单栏应用便会自动显示任务状态。
+1. Download the latest `Codex Tower-*-macos-arm64.zip` from [Releases](https://github.com/Hyp-Plus/codex-tower/releases).
+2. Unzip it and move `Codex Tower.app` to Applications.
+3. Install the Codex Tower plugin in Codex and review its lifecycle hooks.
+4. Start a new Codex task. Its status will appear automatically in the menu-bar dashboard.
 
-> 目前支持 Apple Silicon Mac，要求 macOS 13 或更新版本。应用为本地构建、未公证版本；首次打开如被系统拦截，请在「应用程序」中右键选择“打开”。
+> Codex Tower currently supports Apple Silicon Macs running macOS 13 or later. The app is locally signed but not notarized; if macOS blocks the first launch, right-click the app in Applications and choose **Open**.
 
-## 工作方式
+## How it works
 
 ```text
-Codex 生命周期 hooks  →  本地 JSON 元数据  →  Codex Tower 菜单栏面板
+Codex lifecycle hooks  →  local JSON metadata  →  Codex Tower menu-bar dashboard
 ```
 
-插件在任务状态变化时更新本地元数据；菜单栏应用每秒读取一次这些文件并刷新界面。整个过程不经过云端服务。
+Lifecycle hooks update local metadata as a task changes state. The menu-bar app refreshes from those files once per second. No task data is sent through a cloud service.
 
-## 开发
+## Sound alerts
+
+On macOS, Codex Tower uses built-in system sounds:
+
+- `Basso` when Codex needs approval.
+- `Glass` when a task is ready for review.
+- `Hero` when a task is explicitly marked complete.
+
+Use the **Mute** button in the dashboard, or the plugin settings tool, to silence notifications.
+
+## Development
 
 ```zsh
 cd menu-bar-app
@@ -50,12 +59,12 @@ zsh build-app.sh
 open "dist/Codex Tower.app"
 ```
 
-项目包含三部分：
+The project has three parts:
 
-- `hooks/`：记录 Codex 任务生命周期。
-- `server/`：提供本地任务查询、历史同步及通知设置。
-- `menu-bar-app/`：原生 SwiftUI 菜单栏应用。
+- `hooks/` records Codex task lifecycle events.
+- `server/` provides local task queries, history sync, and notification settings.
+- `menu-bar-app/` is the native SwiftUI menu-bar application.
 
-## 许可证与贡献
+## Contributing
 
-欢迎提交 issue 和 pull request。请先阅读代码及隐私边界，确保任何贡献都不会引入对对话内容的收集或上传。
+Issues and pull requests are welcome. Please preserve Codex Tower's local-only privacy boundary: contributions must not collect or upload conversation content.
