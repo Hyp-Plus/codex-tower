@@ -1,3 +1,12 @@
+# Codex Tower v0.1.2
+
+## Easier installation
+
+- Added a drag-to-Applications macOS DMG installer.
+- Added a GitHub-backed Codex marketplace, so users can install the plugin from the Codex Plugins page after one marketplace command.
+
+---
+
 # Codex Tower v0.1.1
 
 ## Updated

@@ -1,6 +1,6 @@
 {
   "name": "codex-tower",
-  "version": "0.1.0+codex.20260729055038",
+  "version": "0.1.0+codex.20260729074415",
   "description": "Local multi-chat task status tracking and macOS sound notifications for Codex.",
   "author": {
     "name": "Haruki"

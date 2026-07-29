@@ -1,0 +1,21 @@
+{
+  "name": "codex-tower-marketplace",
+  "interface": {
+    "displayName": "Codex Tower Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "codex-tower",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Hyp-Plus/codex-tower.git",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

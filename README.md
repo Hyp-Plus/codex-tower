@@ -26,10 +26,19 @@ It **does not read, store, or upload** conversation transcripts, tool output, or
 
 ## Install
 
-1. Download the latest `Codex Tower-*-macos-arm64.zip` from [Releases](https://github.com/Hyp-Plus/codex-tower/releases).
-2. Unzip it and move `Codex Tower.app` to Applications.
-3. Install the Codex Tower plugin in Codex and review its lifecycle hooks.
-4. Start a new Codex task. Its status will appear automatically in the menu-bar dashboard.
+### 1. Install the menu-bar app
+
+Download the latest `Codex Tower-*-macos-arm64.dmg` from [Releases](https://github.com/Hyp-Plus/codex-tower/releases), open it, then drag **Codex Tower** into **Applications**. Launch the app once — it will appear in the menu bar instead of the Dock.
+
+### 2. Install the Codex plugin
+
+In Terminal, register the Codex Tower marketplace:
+
+```zsh
+codex plugin marketplace add Hyp-Plus/codex-tower
+```
+
+Then open Codex, go to **Plugins**, select **Codex Tower Marketplace**, and click **Install** on Codex Tower. Review and trust its lifecycle hooks when prompted, then start a new Codex task.
 
 > Codex Tower currently supports Apple Silicon Macs running macOS 13 or later. The app is locally signed but not notarized; if macOS blocks the first launch, right-click the app in Applications and choose **Open**.
 
@@ -57,6 +66,9 @@ Use the **Mute** button in the dashboard, or the plugin settings tool, to silenc
 cd menu-bar-app
 zsh build-app.sh
 open "dist/Codex Tower.app"
+
+# Build the drag-to-Applications installer
+zsh package-dmg.sh
 ```
 
 The project has three parts:
