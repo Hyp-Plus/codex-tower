@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "codex-tower": {
+      "command": "node",
+      "args": ["${PLUGIN_ROOT}/server/mcp-server.mjs"]
+    }
+  }
+}

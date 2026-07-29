@@ -1,0 +1,7 @@
+.DS_Store
+
+# Swift Package Manager build products
+menu-bar-app/.build/
+
+# Locally signed app bundles and release archives
+menu-bar-app/dist/

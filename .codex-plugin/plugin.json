@@ -1,0 +1,28 @@
+{
+  "name": "codex-tower",
+  "version": "0.1.0+codex.20260729055038",
+  "description": "Local multi-chat task status tracking and macOS sound notifications for Codex.",
+  "author": {
+    "name": "Haruki"
+  },
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Codex Tower",
+    "shortDescription": "Track Codex chats and hear status changes.",
+    "longDescription": "A privacy-first local task tracker for Codex chats. It stores only task metadata, uses lifecycle hooks to track status, and plays distinct macOS sounds for attention and completion.",
+    "developerName": "Haruki",
+    "category": "Productivity",
+    "capabilities": [
+      "Local lifecycle tracking",
+      "Task status tools",
+      "macOS sound notifications"
+    ],
+    "defaultPrompt": [
+      "Show my Codex Tower task statuses.",
+      "Mark this Codex task complete in Codex Tower.",
+      "Mute Codex Tower notifications."
+    ]
+  }
+}
