@@ -60,6 +60,10 @@ On macOS, Codex Tower uses built-in system sounds:
 
 Use the **Mute** button in the dashboard, or the plugin settings tool, to silence notifications.
 
+## Complete a task from Codex
+
+After reviewing a task directly in Codex, send `task complete` as a standalone message in that same conversation. Codex Tower marks the task as completed immediately, plays the completion sound, and keeps the command out of the model conversation. Chinese users can send `验收完成` instead.
+
 ## Development
 
 ```zsh

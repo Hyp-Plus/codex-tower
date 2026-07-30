@@ -1,3 +1,13 @@
+# Codex Tower v0.1.3
+
+## Complete tasks from Codex
+
+- Send `task complete` as a standalone message in a Codex task to mark it completed without leaving the conversation.
+- Chinese users can send `验收完成` instead.
+- The task dashboard updates immediately and plays the configured completion sound once.
+
+---
+
 # Codex Tower v0.1.2
 
 ## Easier installation

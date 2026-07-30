@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
-import { getSettings, updateTask } from "../server/task-store.mjs";
+import { getSettings, getTask, updateTask } from "../server/task-store.mjs";
+import { isCompletionCommand } from "../server/completion-command.mjs";
 
 const input = await new Promise((resolve, reject) => {
   let body = "";
@@ -12,6 +13,8 @@ const input = await new Promise((resolve, reject) => {
 const event = input.hook_event_name || input.hookEventName;
 const sessionId = input.session_id || input.sessionId;
 if (!sessionId || !event) process.exit(0);
+const completionRequest = event === "UserPromptSubmit" && isCompletionCommand(input.prompt);
+let completionChanged = false;
 
 function titleFromPrompt(prompt) {
   const compact = String(prompt || "").replace(/\s+/g, " ").trim();
@@ -29,8 +32,18 @@ const task = await (async () => {
   switch (event) {
     case "SessionStart":
       return updateTask(sessionId, { source: "live", status: "ready", cwd: input.cwd || null, model: input.model || null, closedAt: null });
-    case "UserPromptSubmit":
+    case "UserPromptSubmit": {
+      if (completionRequest) {
+        const existing = await getTask(sessionId);
+        completionChanged = existing?.status !== "completed";
+        return updateTask(sessionId, {
+          status: "completed",
+          completedAt: existing?.completedAt || new Date().toISOString(),
+          waitingReason: null
+        });
+      }
       return updateTask(sessionId, { source: "live", status: "running", title: titleFromPrompt(input.prompt), turnId: input.turn_id || input.turnId || null, waitingReason: null, completedAt: null });
+    }
     case "PermissionRequest":
       return updateTask(sessionId, { status: "waiting_for_you", waitingReason: input.tool_input?.description || `Approval needed for ${input.tool_name || "a tool"}` });
     case "PostToolUse": {
@@ -56,4 +69,8 @@ const task = await (async () => {
 const settings = await getSettings();
 if (!settings.muted && event === "PermissionRequest") play(settings.sounds.blocked);
 if (!settings.muted && event === "Stop" && task.status === "awaiting_review") play(settings.sounds.attention);
+if (!settings.muted && completionChanged) play(settings.sounds.complete);
+if (completionRequest) {
+  process.stdout.write(JSON.stringify({ decision: "block", reason: "Codex Tower marked this task as complete." }));
+}
 process.exit(0);
