@@ -10,9 +10,12 @@ Codex Tower helps you keep track of multiple Codex conversations without constan
 
 - **Never miss a completed task.** Codex Tower plays a macOS notification sound when a task is explicitly marked complete.
 - **Know when attention is needed.** It also alerts you when Codex is waiting for approval or a turn is ready for review.
+- **Act from the alert.** Native macOS notifications show the task title; clicking one opens the matching Codex conversation.
 - **See live work first.** The dashboard opens on active tasks, so imported history never buries what is happening now.
 - **Return to any task in one click.** Select a task card to open its matching Codex conversation.
-- **Stay in control.** Filter All, Attention, Active, and History tasks; mute sounds whenever you need focus.
+- **Handle tasks without context switching.** Attention cards include quick **Done** and **Later** actions; Later hides a task for one hour.
+- **Stay in control.** Filter All, Attention, Active, Done, and History tasks; completed tasks move to History after 24 hours.
+- **Use your language.** The menu-bar interface follows the macOS system language and supports English and Simplified Chinese.
 
 ## Privacy first
 

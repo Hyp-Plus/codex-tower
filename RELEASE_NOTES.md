@@ -1,3 +1,15 @@
+# Codex Tower v0.1.4
+
+## A faster task center
+
+- Fixed the `ready` lifecycle state so newly started tasks always appear in the dashboard.
+- Added clickable native macOS notifications for tasks that need attention or have completed.
+- Added card-level **Done** and one-hour **Later** actions.
+- Added a **Done** filter and automatic archiving of completed tasks after 24 hours.
+- Added automatic English and Simplified Chinese interface localization.
+
+---
+
 # Codex Tower v0.1.3
 
 ## Complete tasks from Codex
